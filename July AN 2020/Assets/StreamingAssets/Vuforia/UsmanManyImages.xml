@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="20Dollor" size="0.080000 0.033330" />
+    <ImageTarget name="fiveDollor" size="0.080000 0.033727" />
+    <ImageTarget name="oneDollor" size="0.080000 0.033237" />
+    <ImageTarget name="CSCnewBack" size="0.060000 0.034215" />
+    <ImageTarget name="CSCnewFront" size="0.060000 0.034388" />
+    <ImageTarget name="CSColdBack" size="0.060000 0.033950" />
+    <ImageTarget name="CSColdFront" size="0.060000 0.033673" />
+  </Tracking>
+</QCARConfig>
