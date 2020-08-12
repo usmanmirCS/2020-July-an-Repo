@@ -2,7 +2,7 @@
 {
     SubShader
     {
-        Tags { "Queue"="3001" }
+        Tags { "Queue"="Transparent + 1" }
         Pass { Blend Zero One }
     }
 }
