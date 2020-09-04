@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    GameObject prefab;
-    float shootForce;
-    // Start is called before the first frame update
-    int Sum(int x, int y)
-    {
-        int result = x + y;
-        return result;
-        //transform.Rotate(Vector.up);
-    }
+    public List<Material> m_listOfGOs = new List<Material>();
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        GameObject temp = Instantiate(prefab, transform.position, transform.rotation);
-        temp.GetComponent<Rigidbody>().AddForce(transform.up * shootForce);
+
     }
 }
