@@ -40,7 +40,7 @@ public class VRGrab : MonoBehaviour
 
             if(m_touchingObject)
             {
-                Grab();
+                AdvGrab();
             }
         }
         else if(Input.GetAxis(m_gripName) < 0.5f && m_gripHeld == true)
@@ -49,9 +49,34 @@ public class VRGrab : MonoBehaviour
             m_anim.SetBool("isGrabbing", false);
             if(m_heldObject)
             {
-                Release();
+                AdvRelease();
             }
         }
+    }
+
+    void AdvGrab()
+    {
+        m_heldObject = m_touchingObject;
+
+        FixedJoint fx = gameObject.AddComponent<FixedJoint>();
+        fx.connectedBody = m_heldObject.GetComponent<Rigidbody>();
+        fx.breakForce = 2500;
+        fx.breakTorque = 2500;
+
+        m_heldObject.transform.SetParent(transform);
+    }
+
+    void AdvRelease()
+    {
+        m_heldObject.transform.SetParent(null);
+        Destroy(GetComponent<FixedJoint>());
+        m_heldObject = null;
+    }
+
+    private void OnJointBreak(float breakForce)
+    {
+        m_heldObject.transform.SetParent(null);
+        m_heldObject = null;
     }
 
     void Grab()

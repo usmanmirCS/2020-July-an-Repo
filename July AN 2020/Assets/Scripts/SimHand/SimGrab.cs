@@ -36,7 +36,7 @@ public class SimGrab : MonoBehaviour
             m_anim.SetBool("isGrabbing", true);
             if(m_touchingObject)
             {
-                Grab();
+                AdvGrab();
             }
         }
         else if(Input.GetKeyUp(KeyCode.Mouse1))
@@ -44,10 +44,42 @@ public class SimGrab : MonoBehaviour
             m_anim.SetBool("isGrabbing", false);
             if(m_heldObject)
             {
-                Release();
+                AdvRelease();
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Mouse0) && m_heldObject)
+        {
+            m_heldObject.SendMessage("TriggerDown");
+        }
     }
+
+    void AdvGrab()
+    {
+        m_heldObject = m_touchingObject;
+
+        FixedJoint fx = gameObject.AddComponent<FixedJoint>();
+        fx.connectedBody = m_heldObject.GetComponent<Rigidbody>();
+        fx.breakForce = 2500;
+        fx.breakTorque = 2500;
+
+        m_heldObject.transform.SetParent(transform);
+    }
+
+    void AdvRelease()
+    {
+        m_heldObject.transform.SetParent(null);
+        Destroy(GetComponent<FixedJoint>());
+        m_heldObject = null;
+    }
+
+    private void OnJointBreak(float breakForce)
+    {
+        m_heldObject.transform.SetParent(null);
+        m_heldObject = null;
+    }
+
+
 
     void Grab()
     {
