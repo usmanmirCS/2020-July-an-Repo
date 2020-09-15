@@ -9,6 +9,9 @@ public class VRGrab : MonoBehaviour
     public string m_gripName;
     private bool m_gripHeld;
 
+    public string m_triggerName;
+    private bool m_triggerHeld;
+
     private GameObject m_touchingObject;
     private GameObject m_heldObject;
     
@@ -51,6 +54,19 @@ public class VRGrab : MonoBehaviour
             {
                 AdvRelease();
             }
+        }
+
+        if (Input.GetAxis(m_triggerName) > 0.5f && m_triggerHeld == false)
+        {
+            m_triggerHeld = true;
+            if (m_heldObject)
+            {
+                m_heldObject.SendMessage("TriggerDown");
+            }
+        }
+        else if(Input.GetAxis(m_triggerName) < 0.5f && m_triggerHeld == true)
+        {
+            m_triggerHeld = false;
         }
     }
 
