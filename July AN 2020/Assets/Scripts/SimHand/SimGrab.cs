@@ -44,13 +44,24 @@ public class SimGrab : MonoBehaviour
             m_anim.SetBool("isGrabbing", false);
             if(m_heldObject)
             {
+                m_heldObject.SendMessage("Released"); //send Released message
                 AdvRelease();
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse0) && m_heldObject)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && m_heldObject)
         {
             m_heldObject.SendMessage("TriggerDown");
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0) && m_heldObject)
+        {
+            m_heldObject.SendMessage("TriggerUp"); //send TriggerUp message
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse2) && m_heldObject)
+        {
+            m_heldObject.SendMessage("MenuDown"); //send TriggerUp message
         }
     }
 

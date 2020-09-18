@@ -6,6 +6,8 @@ public class VRGrab : MonoBehaviour
 {
     public Animator m_anim;
 
+    public string m_menuButtonName;
+
     public string m_gripName;
     private bool m_gripHeld;
 
@@ -52,6 +54,7 @@ public class VRGrab : MonoBehaviour
             m_anim.SetBool("isGrabbing", false);
             if(m_heldObject)
             {
+                m_heldObject.SendMessage("Released");
                 AdvRelease();
             }
         }
@@ -67,6 +70,15 @@ public class VRGrab : MonoBehaviour
         else if(Input.GetAxis(m_triggerName) < 0.5f && m_triggerHeld == true)
         {
             m_triggerHeld = false;
+            if (m_heldObject)
+            {
+                m_heldObject.SendMessage("TriggerUp");
+            }
+        }
+
+        if(Input.GetButtonDown(m_menuButtonName) && m_heldObject)
+        {
+            m_heldObject.SendMessage("MenuDown");
         }
     }
 
