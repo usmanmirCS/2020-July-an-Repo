@@ -16,6 +16,12 @@ public class VRGrab : MonoBehaviour
 
     private GameObject m_touchingObject;
     private GameObject m_heldObject;
+
+    private Vector3 m_oldPos;
+    private Vector3 m_handVelocity;
+
+    private Vector3 m_oldEulerAngles;
+    private Vector3 m_handAngularVelocity;
     
     private void OnTriggerStay(Collider other)
     {
@@ -38,6 +44,12 @@ public class VRGrab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_handVelocity = transform.position - m_oldPos;
+        m_oldPos = transform.position;
+
+        m_handAngularVelocity = transform.eulerAngles - m_oldEulerAngles;
+        m_oldEulerAngles = transform.eulerAngles;
+
         if (Input.GetAxis(m_gripName) > 0.5f && m_gripHeld == false)
         {
             m_gripHeld = true;
@@ -98,6 +110,11 @@ public class VRGrab : MonoBehaviour
     {
         m_heldObject.transform.SetParent(null);
         Destroy(GetComponent<FixedJoint>());
+
+        Rigidbody rb = m_heldObject.GetComponent<Rigidbody>();
+        rb.velocity = m_handVelocity * 75 / rb.mass;
+        rb.angularVelocity = m_handAngularVelocity * 5 / rb.mass;
+
         m_heldObject = null;
     }
 
